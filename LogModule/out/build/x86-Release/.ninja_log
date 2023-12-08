@@ -1,0 +1,6 @@
+# ninja log v5
+20	33	0	clean	8c45b54705a541e8
+71	2300	7230405622795203	LogModule/CMakeFiles/CppLogModule.dir/LogAPI.cpp.obj	adeaaf608dee29de
+12	2042	7229732439984020	LogModule/CMakeFiles/CppLogModule.dir/src/LogModule.cpp.obj	a9221ccd547868c6
+2302	2542	7230405622795203	LogModule/CppLogModule.dll	697265f2703d6209
+2302	2542	7230405622795203	LogModule/CppLogModule.lib	697265f2703d6209

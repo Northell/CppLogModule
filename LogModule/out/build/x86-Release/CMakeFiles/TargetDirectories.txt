@@ -1,0 +1,8 @@
+C:/share/Code/CppModules/LogModule/out/build/x86-Release/CMakeFiles/edit_cache.dir
+C:/share/Code/CppModules/LogModule/out/build/x86-Release/CMakeFiles/rebuild_cache.dir
+C:/share/Code/CppModules/LogModule/out/build/x86-Release/LogModule/CMakeFiles/CppLogModule.dir
+C:/share/Code/CppModules/LogModule/out/build/x86-Release/LogModule/CMakeFiles/edit_cache.dir
+C:/share/Code/CppModules/LogModule/out/build/x86-Release/LogModule/CMakeFiles/rebuild_cache.dir
+C:/share/Code/CppModules/LogModule/out/build/x86-Release/Tests/CMakeFiles/LogModule_Test.dir
+C:/share/Code/CppModules/LogModule/out/build/x86-Release/Tests/CMakeFiles/edit_cache.dir
+C:/share/Code/CppModules/LogModule/out/build/x86-Release/Tests/CMakeFiles/rebuild_cache.dir
