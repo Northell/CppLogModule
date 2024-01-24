@@ -20,7 +20,8 @@ void LogModule::LogModule::init()
 void LogModule::LogModule::wrapper()
 {
 	//Поток пишет логи
-	while (!s_terminated)
+	while ((!s_terminated)
+		|| (s_deqMessages.size()>0))
 	{
 		try
 		{
@@ -98,10 +99,11 @@ void LogModule::LogModule::set_debugMode(bool isDebug)
 	s_debugMode = isDebug;
 }
 
-void  LogModule::LogModule::write_log(const std::wstring& cref_strLogFileName, const std::wstring& cref_strObjectInvoker, const std::wstring& cref_strMethodInvoker, const std::wstring& cref_strMessage)
+void  LogModule::LogModule::write_log(const std::wstring& cref_strLogFileName, const std::wstring& cref_strObjectInvoker,
+	const std::wstring& cref_strMethodInvoker, const std::wstring& cref_strMessage)
 {
 	if (s_debugMode)
-	{
+	{ 
 		if (!s_terminated)
 		{
 			try
@@ -129,7 +131,6 @@ void  LogModule::LogModule::write_log(const std::wstring& cref_strLogFileName, c
 				//Логгируем
 				std::wcout << ex.what();
 			}
-
 		}
 	}
 }

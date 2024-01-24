@@ -15,8 +15,7 @@ FetchContent_MakeAvailable(googletest)
 
 # TODO: Добавьте тесты и целевые объекты, если это необходимо.
 # GTest
-enable_testing()
-
+#enable_testing()
 
 add_executable(LogModule_Test "src/LogModule_Test.cpp")
 target_link_libraries(LogModule_Test GTest::gtest_main)

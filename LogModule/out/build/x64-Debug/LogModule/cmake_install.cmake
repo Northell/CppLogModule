@@ -1,8 +1,8 @@
-# Install script for directory: C:/share/Code/CppModules/LogModule/LogModule
+# Install script for directory: C:/share/Code/CppModules/CppLogModule/LogModule/LogModule
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/share/Code/CppModules/LogModule/out/install/x64-Debug")
+  set(CMAKE_INSTALL_PREFIX "C:/share/Code/CppModules/CppLogModule/LogModule/out/install/x64-Debug")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -30,5 +30,17 @@ endif()
 # Is this installation the result of a crosscompile?
 if(NOT DEFINED CMAKE_CROSSCOMPILING)
   set(CMAKE_CROSSCOMPILING "FALSE")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/../../../../../libs/CppLogModule/lib" TYPE STATIC_LIBRARY OPTIONAL FILES "C:/share/Code/CppModules/CppLogModule/LogModule/out/build/x64-Debug/LogModule/CppLogModule.lib")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/../../../../../libs/CppLogModule/lib" TYPE SHARED_LIBRARY FILES "C:/share/Code/CppModules/CppLogModule/LogModule/out/build/x64-Debug/LogModule/CppLogModule.dll")
+endif()
+
+if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/../../../../../libs/CppLogModule/include" TYPE FILE FILES "C:/share/Code/CppModules/CppLogModule/LogModule/LogModule/LogAPI.h")
 endif()
 

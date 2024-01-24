@@ -1,5 +1,0 @@
-if(EXISTS "C:/share/Code/CppModules/LogModule/out/build/x64-Debug/Tests/LogModule_Test[1]_tests.cmake")
-  include("C:/share/Code/CppModules/LogModule/out/build/x64-Debug/Tests/LogModule_Test[1]_tests.cmake")
-else()
-  add_test(LogModule_Test_NOT_BUILT LogModule_Test_NOT_BUILT)
-endif()

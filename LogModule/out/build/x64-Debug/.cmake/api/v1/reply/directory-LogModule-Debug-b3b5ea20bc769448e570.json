@@ -1,0 +1,74 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"LogModule/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 27,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 32,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "../../../../../libs/CppLogModule/lib",
+			"paths" : 
+			[
+				"LogModule/CppLogModule.lib"
+			],
+			"targetId" : "CppLogModule::@42cf10a14d42f8891e9a",
+			"targetIndex" : 0,
+			"targetIsImportLibrary" : true,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "../../../../../libs/CppLogModule/lib",
+			"paths" : 
+			[
+				"LogModule/CppLogModule.dll"
+			],
+			"targetId" : "CppLogModule::@42cf10a14d42f8891e9a",
+			"targetIndex" : 0,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 2,
+			"component" : "Unspecified",
+			"destination" : "../../../../../libs/CppLogModule/include",
+			"paths" : 
+			[
+				"LogModule/LogAPI.h"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "LogModule",
+		"source" : "LogModule"
+	}
+}
