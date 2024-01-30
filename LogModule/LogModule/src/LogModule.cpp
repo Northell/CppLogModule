@@ -51,7 +51,11 @@ void LogModule::LogModule::write(const std::wstring& logFileName, const std::wst
 
 		try
 		{
+	#ifdef _WIN32
 			_wmkdir(logPath.c_str());
+	#else
+			std::filesystem::create_directory(logPath);
+	#endif // _WIN32/Unix
 
 			logPath += L"/";
 			logPath += logFileName;

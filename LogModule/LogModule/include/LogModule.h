@@ -10,7 +10,14 @@
 #include <codecvt>
 #include <deque>
 #include <thread>
+
+#ifdef _WIN32
 #include <direct.h>
+
+#else 
+#include <filesystem>
+#endif
+
 #include <iomanip>
 
 
