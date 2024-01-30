@@ -44,3 +44,7 @@
 13	642	7283083486015013	LogModule/CMakeFiles/CppLogModule.dir/LogAPI.cpp.obj	dc56d27dd007a73d
 9	747	7283083487065860	LogModule/CMakeFiles/CppLogModule.dir/src/LogModule.cpp.obj	f2629b17b6de2ec5
 748	794	7283083487520309	LogModule/CppLogModule.lib	e4784c920f7c7729
+17	27	0	clean	7c4ab7700f810e4a
+14	829	7283084975140711	LogModule/CMakeFiles/CppLogModule.dir/LogAPI.cpp.obj	dc56d27dd007a73d
+9	956	7283084976409804	LogModule/CMakeFiles/CppLogModule.dir/src/LogModule.cpp.obj	f2629b17b6de2ec5
+957	1002	7283084976859620	LogModule/CppLogModule.lib	e4784c920f7c7729

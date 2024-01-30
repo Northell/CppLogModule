@@ -21,7 +21,7 @@ void LogModule::LogModule::wrapper()
 {
 	//Поток пишет логи
 	while ((!s_terminated)
-		|| (s_deqMessages.size()>0))
+		|| (s_deqMessages.size() > 0))
 	{
 		try
 		{
@@ -30,7 +30,7 @@ void LogModule::LogModule::wrapper()
 #ifdef _WIN32
 				std::scoped_lock lock(s_logMutex);
 #else
-				std::lock_guard<std::mutex> lock(s_logMutex); 
+				std::lock_guard<std::mutex> lock(s_logMutex);
 #endif
 				auto& it = s_deqMessages.front();
 				write(it.first, it.second);
@@ -54,11 +54,11 @@ void LogModule::LogModule::write(const std::wstring& logFileName, const std::wst
 
 		try
 		{
-	#ifdef _WIN32
+#ifdef _WIN32
 			_wmkdir(logPath.c_str());
-	#else
+#else
 			mkdir(std::string(logPath.begin(), logPath.end()).c_str(), 764);
-	#endif // _WIN32/Unix
+#endif // _WIN32/Unix
 
 			logPath += L"/";
 			logPath += logFileName;
@@ -68,20 +68,16 @@ void LogModule::LogModule::write(const std::wstring& logFileName, const std::wst
 			const std::locale utf8_locale = std::locale(std::locale(), new std::codecvt_utf8<wchar_t>());
 			streamFile.imbue(utf8_locale);
 
-			if (streamFile.is_open())
-			{
-				streamFile << message;
-			}				
 #else	//unix
 			streamFile.open(std::string(logPath.begin(), logPath.end()).c_str(), std::ios::app | std::ios::binary);
 			const std::locale utf8_locale = std::locale(std::locale(), new std::codecvt_utf8<wchar_t>());
 			streamFile.imbue(utf8_locale);
 
+#endif
 			if (streamFile.is_open())
 			{
-				streamFile << std::string(message.begin(), message.end());
+				streamFile << message;
 			}
-#endif
 		}
 		catch (std::exception ex)
 		{
@@ -93,8 +89,8 @@ void LogModule::LogModule::write(const std::wstring& logFileName, const std::wst
 		{
 			streamFile.close();
 		}
+		}
 	}
-}
 
 std::wstring LogModule::LogModule::get_time()
 {
@@ -122,7 +118,7 @@ void  LogModule::LogModule::write_log(const std::wstring& cref_strLogFileName, c
 	const std::wstring& cref_strMethodInvoker, const std::wstring& cref_strMessage)
 {
 	if (s_debugMode)
-	{ 
+	{
 		if (!s_terminated)
 		{
 			try
