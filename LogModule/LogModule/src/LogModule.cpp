@@ -27,8 +27,11 @@ void LogModule::LogModule::wrapper()
 		{
 			if (s_deqMessages.size() > 0)
 			{
+#ifdef _WIN32
 				std::scoped_lock lock(s_logMutex);
-
+#elif
+				std::lock_guard<std::mutex> lock(s_logMutex); 
+#endif
 				auto& it = s_deqMessages.front();
 				write(it.first, it.second);
 				s_deqMessages.pop_front();
@@ -114,7 +117,11 @@ void  LogModule::LogModule::write_log(const std::wstring& cref_strLogFileName, c
 			{
 				if (cref_strMessage.size() > 0)
 				{
+#ifdef _WIN32
 					std::scoped_lock lock(s_logMutex);
+#elif
+					std::lock_guard<std::mutex> lock(s_logMutex);
+#endif
 
 					init();
 
