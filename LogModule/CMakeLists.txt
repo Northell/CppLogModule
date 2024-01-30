@@ -71,4 +71,4 @@ install(FILES
     endif()
 endmacro()
 
-copy_directory(${CMAKE_CURRENT_SOURCE_DIR}/out/install ${CPPLOGMODULE_ROOT}/install)
+#copy_directory(${CMAKE_CURRENT_SOURCE_DIR}/out/install ${CPPLOGMODULE_ROOT}/install)
