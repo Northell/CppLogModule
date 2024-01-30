@@ -22,7 +22,7 @@
 				{
 					"build" : "LogModule",
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-LogModule-Debug-f91fb8e5a3d891e403e4.json",
+					"jsonFile" : "directory-LogModule-Debug-54d0bc9c52f2605721b4.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.8"
@@ -57,7 +57,7 @@
 				{
 					"directoryIndex" : 1,
 					"id" : "CppLogModule::@42cf10a14d42f8891e9a",
-					"jsonFile" : "target-CppLogModule-Debug-1b47c0b4e34f068fe356.json",
+					"jsonFile" : "target-CppLogModule-Debug-3d612efb0d61ac7b050e.json",
 					"name" : "CppLogModule",
 					"projectIndex" : 0
 				}

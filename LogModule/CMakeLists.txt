@@ -54,6 +54,11 @@ install(FILES
   )
 
   macro(copy_directory _src _dst)
+
+    if (EXISTS ${_dst})
+        file(REMOVE_RECURSE ${_dst})
+    endif ()
+
     execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory ${_src} ${_dst}
         RESULT_VARIABLE _res
         OUTPUT_VARIABLE _out

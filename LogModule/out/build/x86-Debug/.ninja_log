@@ -1,8 +1,8 @@
 # ninja log v5
-8	1972	7278006293228011	LogModule/CMakeFiles/CppLogModule.dir/src/LogModule.cpp.obj	f363c4b5efa51822
-12	1844	7278006291955841	LogModule/CMakeFiles/CppLogModule.dir/LogAPI.cpp.obj	60f735291e97c8ec
-9	46	0	CMakeFiles/install.util	ea4ef299e68c0f15
+13	1469	7282356798131395	LogModule/CMakeFiles/CppLogModule.dir/LogAPI.cpp.obj	60f735291e97c8ec
+8	1565	7282356799091485	LogModule/CMakeFiles/CppLogModule.dir/src/LogModule.cpp.obj	f363c4b5efa51822
 1936	2143	7277991562230270	LogModule/CppLogModule.dll	697265f2703d6209
-1972	2017	7278006293685555	LogModule/CppLogModule.lib	e4784c920f7c7729
-6	188	7278098939624950	build.ninja	dcc8a347b83649ae
-12	21	0	clean	8c45b54705a541e8
+2	54	0	CMakeFiles/install.util	ea4ef299e68c0f15
+1565	1608	7282356799531485	LogModule/CppLogModule.lib	e4784c920f7c7729
+14	291	7282356817204120	build.ninja	dcc8a347b83649ae
+9	18	0	clean	8c45b54705a541e8
