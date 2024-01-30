@@ -1,4 +1,5 @@
 ﻿#include "LogAPI.h"
+#ifdef _WIN32
 // LogModule.cpp: определяет точку входа для приложения.
 //
 #pragma once
@@ -31,3 +32,5 @@ void LogModule::set_debug(bool isDebug)
 {
 	LogModule::set_debugMode(isDebug);
 }
+
+#endif
