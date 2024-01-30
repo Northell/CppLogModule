@@ -1,7 +1,7 @@
 ﻿# CMakeList.txt: файл проекта CMake верхнего уровня; проведите глобальную конфигурацию
 # и включите сюда подпроекты.
 #
-cmake_minimum_required (VERSION 3.8)
+cmake_minimum_required (VERSION 3.14)
 
 set (PROJECT CppLogModule)
 
@@ -9,6 +9,7 @@ set(CMAKE_CXX_STANDARD 17)             # Стандарт C++
 set(CMAKE_CXX_STANDARD_REQUIRED ON) 
 set(CPPLOGMODULE_ROOT /libs/CppLogModule)
 
+set (CMAKE_SIZEOF_VOID_P 4)
 
 # Enable Hot Reload for MSVC compilers if supported.
 if (POLICY CMP0141)

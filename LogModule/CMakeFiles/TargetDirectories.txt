@@ -1,0 +1,13 @@
+/home/nrt/Desktops/Desktop1/share/Code/CppLogModule/LogModule/CMakeFiles/install/strip.dir
+/home/nrt/Desktops/Desktop1/share/Code/CppLogModule/LogModule/CMakeFiles/install/local.dir
+/home/nrt/Desktops/Desktop1/share/Code/CppLogModule/LogModule/CMakeFiles/edit_cache.dir
+/home/nrt/Desktops/Desktop1/share/Code/CppLogModule/LogModule/CMakeFiles/rebuild_cache.dir
+/home/nrt/Desktops/Desktop1/share/Code/CppLogModule/LogModule/CMakeFiles/list_install_components.dir
+/home/nrt/Desktops/Desktop1/share/Code/CppLogModule/LogModule/CMakeFiles/install.dir
+/home/nrt/Desktops/Desktop1/share/Code/CppLogModule/LogModule/LogModule/CMakeFiles/install/strip.dir
+/home/nrt/Desktops/Desktop1/share/Code/CppLogModule/LogModule/LogModule/CMakeFiles/install/local.dir
+/home/nrt/Desktops/Desktop1/share/Code/CppLogModule/LogModule/LogModule/CMakeFiles/CppLogModule.dir
+/home/nrt/Desktops/Desktop1/share/Code/CppLogModule/LogModule/LogModule/CMakeFiles/edit_cache.dir
+/home/nrt/Desktops/Desktop1/share/Code/CppLogModule/LogModule/LogModule/CMakeFiles/rebuild_cache.dir
+/home/nrt/Desktops/Desktop1/share/Code/CppLogModule/LogModule/LogModule/CMakeFiles/install.dir
+/home/nrt/Desktops/Desktop1/share/Code/CppLogModule/LogModule/LogModule/CMakeFiles/list_install_components.dir

@@ -1,0 +1,2 @@
+/usr/bin/ar qc libCppLogModule.a  CMakeFiles/CppLogModule.dir/src/LogModule.cpp.o CMakeFiles/CppLogModule.dir/LogAPI.cpp.o
+/usr/bin/ranlib libCppLogModule.a
