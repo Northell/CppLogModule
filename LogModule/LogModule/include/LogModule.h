@@ -15,7 +15,8 @@
 #include <direct.h>
 
 #else 
-#include <filesystem>
+#include <sys/stat.h>
+#include <sys/types.h>
 #endif
 
 #include <iomanip>
