@@ -29,7 +29,7 @@ void LogModule::LogModule::wrapper()
 			{
 #ifdef _WIN32
 				std::scoped_lock lock(s_logMutex);
-#elif
+#else
 				std::lock_guard<std::mutex> lock(s_logMutex); 
 #endif
 				auto& it = s_deqMessages.front();
@@ -119,7 +119,7 @@ void  LogModule::LogModule::write_log(const std::wstring& cref_strLogFileName, c
 				{
 #ifdef _WIN32
 					std::scoped_lock lock(s_logMutex);
-#elif
+#else
 					std::lock_guard<std::mutex> lock(s_logMutex);
 #endif
 
