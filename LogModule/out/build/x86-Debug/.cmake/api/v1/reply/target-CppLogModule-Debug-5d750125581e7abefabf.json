@@ -52,7 +52,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Ob0 /Od /RTC1 -std:c++20 -ZI"
+					"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Ob0 /Od /RTC1 -std:c++17 -ZI"
 				}
 			],
 			"language" : "CXX",
@@ -62,7 +62,7 @@
 				[
 					1
 				],
-				"standard" : "20"
+				"standard" : "17"
 			},
 			"sourceIndexes" : 
 			[

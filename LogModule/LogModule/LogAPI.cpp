@@ -11,7 +11,7 @@ void LogModule::write_log(const wchar_t* pathToFile, const wchar_t* classInvoker
 	setlocale(LC_ALL, "ru");
 	LogModule::init();
 
-	//std::wcout << pathToFile << "\t" << classInvoker << "\t" << methodInvoker << "\t" << message << "\n\n";
+	std::wcout << pathToFile << "\t" << classInvoker << "\t" << methodInvoker << "\t" << message << "\n\n";
 
 	//Логгируем
 	LogModule::write_log(pathToFile, classInvoker, methodInvoker, message);

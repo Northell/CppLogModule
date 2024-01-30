@@ -11,6 +11,7 @@
 #include <deque>
 #include <thread>
 #include <direct.h>
+#include <iomanip>
 
 
 namespace LogModule

@@ -4,5 +4,14 @@
 1936	2143	7277991562230270	LogModule/CppLogModule.dll	697265f2703d6209
 2	54	0	CMakeFiles/install.util	ea4ef299e68c0f15
 1565	1608	7282356799531485	LogModule/CppLogModule.lib	e4784c920f7c7729
-14	291	7282356817204120	build.ninja	dcc8a347b83649ae
+42	1155	7283022489478065	build.ninja	dcc8a347b83649ae
 9	18	0	clean	8c45b54705a541e8
+24	273	7283022489478065	build.ninja	dcc8a347b83649ae
+20	32	0	clean	7c4ab7700f810e4a
+14	1079	7283022501244920	LogModule/CMakeFiles/CppLogModule.dir/LogAPI.cpp.obj	dc56d27dd007a73d
+16	27	0	clean	7c4ab7700f810e4a
+13	727	7283022917121420	LogModule/CMakeFiles/CppLogModule.dir/LogAPI.cpp.obj	dc56d27dd007a73d
+15	26	0	clean	7c4ab7700f810e4a
+13	619	7283023419365810	LogModule/CMakeFiles/CppLogModule.dir/LogAPI.cpp.obj	dc56d27dd007a73d
+8	736	7283023420538628	LogModule/CMakeFiles/CppLogModule.dir/src/LogModule.cpp.obj	f2629b17b6de2ec5
+736	807	7283023421166308	LogModule/CppLogModule.lib	e4784c920f7c7729

@@ -108,14 +108,14 @@ build install\local: phony CMakeFiles\install\local.util
 build cmake_object_order_depends_target_CppLogModule: phony || LogModule\CMakeFiles\CppLogModule.dir
 
 build LogModule\CMakeFiles\CppLogModule.dir\src\LogModule.cpp.obj: CXX_COMPILER__CppLogModule_unscanned_Debug C$:\share\Code\CppModules\CppLogModule\LogModule\LogModule\src\LogModule.cpp || cmake_object_order_depends_target_CppLogModule
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Ob0 /Od /RTC1 -std:c++20 -ZI
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Ob0 /Od /RTC1 -std:c++17 -ZI
   OBJECT_DIR = LogModule\CMakeFiles\CppLogModule.dir
   OBJECT_FILE_DIR = LogModule\CMakeFiles\CppLogModule.dir\src
   TARGET_COMPILE_PDB = LogModule\CMakeFiles\CppLogModule.dir\CppLogModule.pdb
   TARGET_PDB = LogModule\CppLogModule.pdb
 
 build LogModule\CMakeFiles\CppLogModule.dir\LogAPI.cpp.obj: CXX_COMPILER__CppLogModule_unscanned_Debug C$:\share\Code\CppModules\CppLogModule\LogModule\LogModule\LogAPI.cpp || cmake_object_order_depends_target_CppLogModule
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Ob0 /Od /RTC1 -std:c++20 -ZI
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Ob0 /Od /RTC1 -std:c++17 -ZI
   OBJECT_DIR = LogModule\CMakeFiles\CppLogModule.dir
   OBJECT_FILE_DIR = LogModule\CMakeFiles\CppLogModule.dir
   TARGET_COMPILE_PDB = LogModule\CMakeFiles\CppLogModule.dir\CppLogModule.pdb
