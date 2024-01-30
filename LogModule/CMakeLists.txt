@@ -7,7 +7,8 @@ set (PROJECT CppLogModule)
 
 set(CMAKE_CXX_STANDARD 17)             # Стандарт C++
 set(CMAKE_CXX_STANDARD_REQUIRED ON) 
-set(CPPLOGMODULE_ROOT ../../../../../libs/CppLogModule)
+set(CPPLOGMODULE_ROOT libs/CppLogModule)
+set (CMAKE_BINARY_DIR out)
 
 # Enable Hot Reload for MSVC compilers if supported.
 if (POLICY CMP0141)
