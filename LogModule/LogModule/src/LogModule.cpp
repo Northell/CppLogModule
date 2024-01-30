@@ -62,6 +62,8 @@ void LogModule::LogModule::write(const std::wstring& logFileName, const std::wst
 
 			logPath += L"/";
 			logPath += logFileName;
+
+#if _WIN32
 			streamFile.open(logPath, std::ios::app | std::ios::binary);
 			const std::locale utf8_locale = std::locale(std::locale(), new std::codecvt_utf8<wchar_t>());
 			streamFile.imbue(utf8_locale);
@@ -69,7 +71,17 @@ void LogModule::LogModule::write(const std::wstring& logFileName, const std::wst
 			if (streamFile.is_open())
 			{
 				streamFile << message;
+			}				
+#else	//unix
+			streamFile.open(std::string(logPath.begin(), logPath.end()).c_str(), std::ios::app | std::ios::binary);
+			const std::locale utf8_locale = std::locale(std::locale(), new std::codecvt_utf8<wchar_t>());
+			streamFile.imbue(utf8_locale);
+
+			if (streamFile.is_open())
+			{
+				streamFile << std::string(message.begin(), message.end());
 			}
+#endif
 		}
 		catch (std::exception ex)
 		{
