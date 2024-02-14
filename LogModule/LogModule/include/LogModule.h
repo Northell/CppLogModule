@@ -13,7 +13,6 @@
 
 #ifdef _WIN32
 #include <direct.h>
-
 #else 
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -21,21 +20,19 @@
 
 #include <iomanip>
 
-
 namespace LogModule
 {
 	/// <summary>
-	///		Класс предоставляет инструменты для ведения логов
+    ///		РљР»Р°СЃСЃ РѕСЃСѓС‰РµСЃС‚РІР»СЏРµС‚ СЂР°Р±РѕС‚Сѓ СЃ Р»РѕРіР°РјРё
 	/// </summary>
 	class LogModule
 	{
 	private:
-		static bool		s_init;					//Флаг, указывает, проинициализрован ли этот класс или нет.
-		static bool		s_debugMode;			//Флаг управляет режимом отладки
-		static bool		s_terminated;			//Флаг для потока обработки
-		static std::mutex s_logMutex;			//Мьютекс управляет потокобезопасностью внутри класса
+        static bool         s_init;					//Р¤Р»Р°Рі СѓРєР°Р·С‹РІР°РµС‚, С‡С‚Рѕ РїСЂРѕС€Р»Р° РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ Рё РјРѕР¶РЅРѕ СЂР°Р±РѕС‚Р°С‚СЊ
+        static bool         s_terminated;			//РЈРєР°Р·Р°С‚РµР»СЊ Рє СЂР°Р·СЂСѓС€РµРЅРёСЋ
+        static std::mutex   s_logMutex;             //Р‘Р»РѕРєРёСЂСѓРµС‚ С„Р°Р№Р» РЅР° Р·Р°РїРёСЃСЊ
 
-		static std::deque<std::pair<std::wstring, std::wstring>> s_deqMessages;	//Хранит очередь сообщений, которую нужно записать в файл.
+        static std::deque<std::pair<std::wstring, std::wstring>> s_deqMessages;	//РћС‡РµСЂРµРґСЊ СЃРѕРѕР±С‰РµРЅРёР№, РєРѕС‚РѕСЂСѓСЋ РѕР±СЂР°Р±Р°С‚С‹РІР°РµС‚ РїРѕС‚РѕРє
 	
 	private:
 		static void wrapper();
@@ -46,24 +43,20 @@ namespace LogModule
 	public:
 		static void init();
 
-	public:
+    public:
 		/// <summary>
-		///		Метод выставляет режим отладки
+        ///		РњРµС‚РѕРґ РїРёС€РµС‚ Р»РѕРіРё РІ С„Р°Р№Р»
 		/// </summary>
-		/// <param name="isDebug">
-		///		true - включен отладочный режим, все логи ведутся
-		///		false - отладочный режим выключен, логи не ведутся.
-		/// </param>
-		static void set_debugMode(bool isDebug);
-
-		/// <summary>
-		///		Метод ведет логи
-		/// </summary>
-		/// <param name="logFileName"> Название файла для ведения логов</param>
-		/// <param name="objectInvoker">Название вызывающего объекта (или тип)</param>
-		/// <param name="methodInvoker">Название вызывающего метода (Отобразится в логах)</param>
-		/// <param name="message">Текст сообщения</param>
+        /// <param name="logFileName"> Р¤Р°Р№Р» РґР»СЏ Р·Р°РїРёСЃРё Р»РѕРіРѕРІ</param>
+        /// <param name="objectInvoker">РљР»Р°СЃСЃ, РєРѕС‚РѕСЂС‹Р№ РІС‹Р·С‹РІР°РµС‚ Р»РѕРіРіРµСЂ</param>
+        /// <param name="methodInvoker">РњРµС‚РѕРґ, РёР· РєРѕС‚РѕСЂРѕРіРѕ РѕСЃСѓС‰РµСЃС‚РІР»СЏРµС‚СЃСЏ Р·Р°РїРёСЃСЊ</param>
+        /// <param name="message">РЎРѕРѕР±С‰РµРЅРёРµ, РєРѕС‚РѕСЂРѕРµ РЅСѓР¶РЅРѕ Р·Р°РїРёСЃР°С‚СЊ РІ Р»РѕРіРё</param>
 		static void write_log(const std::wstring& logFileName, const std::wstring& objectInvoker, const std::wstring& methodInvoker, const std::wstring& message);
+
+        /**
+         * @brief dispose destructor
+         */
+        static void dispose();
 	};
 
 }
