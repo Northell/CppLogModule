@@ -9,8 +9,8 @@ TEST(LogModule_Test, Test_LogModule)
 {
 	LogModule::set_debug(true);
 
-	auto d = []() {
-		for (int j = 0; j < 100; ++j)
+    auto d = [](int numThread) {
+        for (int j = 0; j < 1000; ++j)
 		{
 			try
 			{
@@ -19,7 +19,7 @@ TEST(LogModule_Test, Test_LogModule)
 				int id;
 				ss >> id;
 
-				LogModule::write_log("log_test", "Thread", "TEST", "Test j = " + std::to_string(j)
+                LogModule::write_log("log_test", "Thread", "TEST", "Test thread" + std::to_string(numThread) + ": " + std::to_string(j)
 					+ ", std::threadID = " + std::to_string(id));
 			}
 			catch (const std::exception& ex)
@@ -29,17 +29,14 @@ TEST(LogModule_Test, Test_LogModule)
 		}
 		};
 
-	std::vector<std::thread*> threads{
-		new std::thread(d)
-		, new std::thread(d)
-		,new  std::thread(d)
-		, new std::thread(d)
-	};
+    std::vector<std::thread*> threads;
 
-	for (int i = 0; i < threads.size(); ++i)
-	{
-		threads.at(i)->detach();
-	}
+    for(int i =0; i< 100; ++i)
+    {
+        std::thread* th = new std::thread(d, i);
+        threads.push_back(th);
+        th->detach();
+    }
 
 	std::this_thread::sleep_for(std::chrono::milliseconds(10000));
 

@@ -1,54 +1,58 @@
 #include "../include/LogModule.h"
 
-bool LogModule::LogModule::s_init = false;
-bool LogModule::LogModule::s_terminated = false;
-std::deque<std::pair<std::wstring, std::wstring>> LogModule::LogModule::s_deqMessages;
-
-std::mutex  LogModule::LogModule::s_logMutex;
+LogModule::LogModule* LogModule::LogModule::s_pInstance = nullptr;
 
 void LogModule::LogModule::init()
 {
-    if (!s_init)
-    {
-        std::thread d(wrapper);
-        d.detach();
-        s_init = true;
-    }
+    m_terminated = false;
 }
 
-void LogModule::LogModule::wrapper()
+LogModule::LogModule *LogModule::LogModule::get_instance()
+{
+    if (s_pInstance==nullptr)
+    {
+        s_pInstance = new LogModule();
+
+        std::thread d(wrapper, s_pInstance);
+        d.detach();
+    }
+
+    return s_pInstance;
+}
+
+void LogModule::LogModule::wrapper(LogModule* pInstance)
 {
     //Пока поток не будет разрушен или пока есть очередь сообщений
-    while ((!s_terminated)> 0)
+    while ((!pInstance->m_terminated)> 0)
     {
-        try
+        if (pInstance->s_deqMessages.size() > 0)
         {
-            if (s_deqMessages.size() > 0)
-            {
-                std::lock_guard<std::mutex> lock(s_logMutex);
+            std::lock_guard<std::recursive_mutex> lock(pInstance->m_logMutex);
 
-                while(s_deqMessages.size()>0)
+            try
+            {
+                while (pInstance->s_deqMessages.size()>0)
                 {
-                    auto& it = s_deqMessages.front();
-                    write(it.first, it.second);
-                    s_deqMessages.pop_front();
+                    auto d = pInstance->s_deqMessages.front();
+                    pInstance->s_deqMessages.pop_front();
+                    pInstance->write(d.first, d.second);
                 }
             }
-            else std::this_thread::sleep_for(std::chrono::milliseconds(10));
+            catch (const std::exception& ex)
+            {
+                std::cout << "[Wrapper]: ERROR: " + std::string(ex.what());
+            }
         }
-        catch (const std::exception& ex)
-        {
-            std::cout << "[Wrapper]: ERROR: " + std::string(ex.what());
-        }
+        else std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 }
 
-void LogModule::LogModule::write(const std::wstring& logFileName, const std::wstring& message)
+void LogModule::LogModule::write(const std::string& logFileName, const std::string& message)
 {
     if (logFileName.size() > 0)
     {
-        std::wstring logPath = L"Log";
-        std::wofstream streamFile;
+        std::string logPath = "Log";
+        std::ofstream streamFile;
 
         try
         {
@@ -58,7 +62,7 @@ void LogModule::LogModule::write(const std::wstring& logFileName, const std::wst
             mkdir(std::string(logPath.begin(), logPath.end()).c_str(), 764);
 #endif // _WIN32/Unix
 
-            logPath += L"/";
+            logPath += "/";
             logPath += logFileName;
 
 #if _WIN32
@@ -77,7 +81,7 @@ void LogModule::LogModule::write(const std::wstring& logFileName, const std::wst
 
             streamFile.flush();
         }
-        catch (std::exception ex)
+        catch (const std::exception& ex)
         {
             //NOTHING
             std::cout << "ERROR in LogModule: " << ex.what() << "\n";
@@ -90,64 +94,80 @@ void LogModule::LogModule::write(const std::wstring& logFileName, const std::wst
     }
 }
 
-std::wstring LogModule::LogModule::get_time()
+std::string LogModule::LogModule::get_time()
 {
-    auto dtNow = std::chrono::system_clock::now();
-    auto dtTime = std::chrono::system_clock::to_time_t(dtNow);
+    std::string retval = "";
 
-    auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(dtNow.time_since_epoch()) -
-            std::chrono::duration_cast<std::chrono::seconds>(dtNow.time_since_epoch());
+    try
+    {
+        auto dtNow = std::chrono::system_clock::now();
+        auto dtTime = std::chrono::system_clock::to_time_t(dtNow);
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(dtNow.time_since_epoch()) -
+                std::chrono::duration_cast<std::chrono::seconds>(dtNow.time_since_epoch());
 
-    std::wstringstream streamTime{};
-    streamTime << std::put_time(std::localtime(&dtTime), L"%H:%M:%S.") << std::to_wstring(ms.count());
+        std::stringstream streamTime{};
+        streamTime << std::put_time(std::localtime(&dtTime), "%H:%M:%S.") << std::to_string(ms.count());
 
-    std::wstring strTime = streamTime.str();
+        std::string strTime = streamTime.str();
 
-    std::wstring retval = L"[" + strTime.substr(0, strTime.length() - 1) + L"]";
+        retval = "[" + strTime.substr(0, strTime.length() - 1) + "]";
+    }
+    catch (const std::exception& ex)
+    {
+        retval = "ERROR time";
+    }
 
     return retval;
 }
 
-
-void  LogModule::LogModule::write_log(const std::wstring& cref_strLogFileName, const std::wstring& cref_strObjectInvoker,
-                                      const std::wstring& cref_strMethodInvoker, const std::wstring& cref_strMessage)
+LogModule::LogModule::LogModule()
 {
-    if (!s_terminated)
+    init();
+}
+
+LogModule::LogModule::~LogModule()
+{
+    dispose();
+}
+
+void LogModule::LogModule::write_log(const std::string &logFileName, const std::string &cref_objectInvoker, const std::string &cref_methodInvoker, const std::string &cref_message)
+{
+    std::lock_guard<std::recursive_mutex> lock(m_logMutex);
+
+    try
     {
-        try
+        if (!m_terminated)
         {
-            if (cref_strMessage.size() > 0)
+            if (cref_message.size() > 0)
             {
-#ifdef _WIN32
-                std::scoped_lock lock(s_logMutex);
-#else
-                std::lock_guard<std::mutex> lock(s_logMutex);
-#endif
-                std::wstring logFileName = cref_strLogFileName;
-                std::wstring objectInvoker = std::wstring(cref_strObjectInvoker);
-                std::wstring methodInvoker = std::wstring(cref_strMethodInvoker);
-                std::wstring logMessage = std::wstring(cref_strMessage);
+                try
+                {
+                    std::string message = get_time() + "[" + cref_objectInvoker
+                            + ":" + cref_methodInvoker
+                            + "]:\t" + cref_message + "\n";
 
-                std::wstring message = get_time() + L"[" + std::wstring(objectInvoker.begin(), objectInvoker.end())
-                        + L"::" + std::wstring(methodInvoker.begin(), methodInvoker.end())
-                        + L"]:\t" + std::wstring(logMessage.begin(), logMessage.end()).c_str() + L";\n";
-
-                s_deqMessages.push_back(std::pair<std::wstring, std::wstring>(logFileName, message));
+                    s_deqMessages.push_back(std::pair<std::string, std::string>(logFileName, message));
+                }
+                catch (const std::exception& ex)
+                {
+                    //Write ERROR
+                    std::cout << "ERROR IN LOGMODULE: " <<  std::string(ex.what()) + "\n";
+                }
             }
         }
-        catch (const std::exception& ex)
-        {
-            //Write ERROR
-            std::wcout << "ERROR IN LOGMODULE: " <<  ex.what();
-        }
+    }
+    catch (const std::exception& ex)
+    {
+        std::cout << "ERROR in LOGMODULE: "  + std::string(ex.what());
     }
 }
 
 void LogModule::LogModule::dispose()
 {
-    s_terminated = true;
+    std::lock_guard<std::recursive_mutex> lock(m_logMutex);
+    m_terminated = true;
 }
+
 
 

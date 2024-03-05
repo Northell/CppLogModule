@@ -22,41 +22,37 @@
 
 namespace LogModule
 {
-	/// <summary>
-    ///		Класс осуществляет работу с логами
-	/// </summary>
-	class LogModule
-	{
-	private:
-        static bool         s_init;					//Флаг указывает, что прошла инициализация и можно работать
-        static bool         s_terminated;			//Указатель к разрушению
-        static std::mutex   s_logMutex;             //Блокирует файл на запись
+/// <summary>
+///		Класс осуществляет работу с логами
+/// </summary>
+class LogModule
+{
 
-        static std::deque<std::pair<std::wstring, std::wstring>> s_deqMessages;	//Очередь сообщений, которую обрабатывает поток
-	
-	private:
-		static void wrapper();
-		static void write(const std::wstring& logFileName, const std::wstring& message);
+private:
+    static LogModule*   s_pInstance;
 
-		static std::wstring get_time();
-	
-	public:
-		static void init();
+    bool                    m_terminated;			//Указатель к разрушению
+    std::recursive_mutex    m_logMutex;             //Блокирует файл на запись
+    //std::unique_lock<std::mutex> locker;             //RAII mutex
 
-    public:
-		/// <summary>
-        ///		Метод пишет логи в файл
-		/// </summary>
-        /// <param name="logFileName"> Файл для записи логов</param>
-        /// <param name="objectInvoker">Класс, который вызывает логгер</param>
-        /// <param name="methodInvoker">Метод, из которого осуществляется запись</param>
-        /// <param name="message">Сообщение, которое нужно записать в логи</param>
-		static void write_log(const std::wstring& logFileName, const std::wstring& objectInvoker, const std::wstring& methodInvoker, const std::wstring& message);
+    std::deque<std::pair<std::string, std::string>> s_deqMessages;	//Очередь сообщений, которую обрабатывает поток
 
-        /**
-         * @brief dispose destructor
-         */
-        static void dispose();
-	};
+private:
+    static void wrapper(LogModule* instance);
+    void write(const std::string& logFileName, const std::string& message);
+
+    std::string get_time();
+
+protected:
+    LogModule();
+    ~LogModule();
+
+public:
+    static LogModule* get_instance();
+    void init();
+
+    void write_log(const std::string& logFileName, const std::string& objectInvoker, const std::string& methodInvoker, const std::string& message);
+    void dispose();
+};
 
 }
