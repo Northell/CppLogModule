@@ -56,7 +56,11 @@ void LogModule::LogModule::write(const std::string& logFileName, const std::stri
 
         try
         {
+#ifdef __unix
+            mkdir(logPath.c_str(), 764);
+#else
             mkdir(logPath.c_str());
+#endif
             streamFile.open(logPath, std::ios::app | std::ios::binary);
 
             const std::locale utf8_locale = std::locale(std::locale(), new std::codecvt_utf8<wchar_t>());
