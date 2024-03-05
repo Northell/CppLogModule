@@ -1,20 +1,19 @@
 ﻿# CMakeList.txt: файл проекта CMake верхнего уровня; проведите глобальную конфигурацию
 # и включите сюда подпроекты.
 #
-cmake_minimum_required (VERSION 3.1)
+cmake_minimum_required (VERSION 3.5)
 
 set (PROJECT CppLogModule)
 
 set(CMAKE_CXX_STANDARD 17)             # Стандарт C++
 set(CMAKE_CXX_STANDARD_REQUIRED ON) 
+set (CMAKE_SIZEOF_VOID_P 8)
 
 set(CPPLOGMODULE_ROOT /libs/CppLogModule)
-set (CMAKE_SIZEOF_VOID_P 8)
 
 if (NOT UNIX)
     set (CMAKE_MAKE_PROGRAM "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe")
 endif()
-
 
 # Enable Hot Reload for MSVC compilers if supported.
 if (POLICY CMP0141)
@@ -22,7 +21,7 @@ if (POLICY CMP0141)
   set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
 endif()
 
-project ("CppLogModule")
+project ("CppLogModule" VERSION 1.0)
 #project ("LogModule_Test")
 
 # Включите подпроекты.

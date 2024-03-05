@@ -56,21 +56,9 @@ void LogModule::LogModule::write(const std::string& logFileName, const std::stri
 
         try
         {
-#ifdef _WIN32
-            _wmkdir(logPath.c_str());
-#else
-            mkdir(std::string(logPath.begin(), logPath.end()).c_str(), 764);
-#endif // _WIN32/Unix
-
-            logPath += "/";
-            logPath += logFileName;
-
-#if _WIN32
+            mkdir(logPath.c_str());
             streamFile.open(logPath, std::ios::app | std::ios::binary);
-#else	//unix
-            streamFile.open(std::string(logPath.begin(), logPath.end()).c_str(), std::ios::app | std::ios::binary);
 
-#endif
             const std::locale utf8_locale = std::locale(std::locale(), new std::codecvt_utf8<wchar_t>());
             streamFile.imbue(utf8_locale);
 

@@ -1,16 +1,4 @@
-<<<<<<< HEAD
-#include <iostream>
-
 #include "LogAPI.h"
-=======
-﻿#include "LogAPI.h"
-
-#ifndef __unix
-// LogModule.cpp: определяет точку входа для приложения.
-//
-#include <iostream>
-#include <locale.h>
->>>>>>> 6f4f47a6903ad9abe1ed49ec7ac7dbcfcd6b9a4d
 
 namespace
 {
