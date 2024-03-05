@@ -22,7 +22,7 @@ LogModule::LogModule *LogModule::LogModule::get_instance()
 
 void LogModule::LogModule::wrapper(LogModule* pInstance)
 {
-    //РџРѕРєР° РїРѕС‚РѕРє РЅРµ Р±СѓРґРµС‚ СЂР°Р·СЂСѓС€РµРЅ РёР»Рё РїРѕРєР° РµСЃС‚СЊ РѕС‡РµСЂРµРґСЊ СЃРѕРѕР±С‰РµРЅРёР№
+    //Пока поток не будет разрушен или пока есть очередь сообщений
     while ((!pInstance->m_terminated)> 0)
     {
         if (pInstance->s_deqMessages.size() > 0)
