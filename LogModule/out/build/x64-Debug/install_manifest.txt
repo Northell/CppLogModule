@@ -1,7 +1,0 @@
-C:/share/Code/CppModules/CppLogModule/LogModule/out/install/x64-Debug/../../../../../libs/CppLogModule/lib/cmake/CppLogModule/CppLogModule.cmake
-C:/share/Code/CppModules/CppLogModule/LogModule/out/install/x64-Debug/../../../../../libs/CppLogModule/lib/cmake/CppLogModule/CppLogModule-debug.cmake
-C:/share/Code/CppModules/CppLogModule/LogModule/out/install/x64-Debug/../../../../../libs/CppLogModule/lib/cmake/CppLogModuleConfig.cmake
-C:/share/Code/CppModules/CppLogModule/LogModule/out/install/x64-Debug/../../../../../libs/CppLogModule/lib/cmake/CppLogModuleConfigVersion.cmake
-C:/share/Code/CppModules/CppLogModule/LogModule/out/install/x64-Debug/../../../../../libs/CppLogModule/lib/CppLogModule.lib
-C:/share/Code/CppModules/CppLogModule/LogModule/out/install/x64-Debug/../../../../../libs/CppLogModule/lib/CppLogModule.dll
-C:/share/Code/CppModules/CppLogModule/LogModule/out/install/x64-Debug/../../../../../libs/CppLogModule/include/LogAPI.h

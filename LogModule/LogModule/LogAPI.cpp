@@ -1,10 +1,9 @@
 ﻿#include "LogAPI.h"
-#ifdef _WIN32
+
+#ifndef __unix
 // LogModule.cpp: определяет точку входа для приложения.
 //
-#pragma once
 #include <iostream>
-#include "LogAPI.h"
 #include <locale.h>
 
 void LogModule::write_log(const wchar_t* pathToFile, const wchar_t* classInvoker, const wchar_t* methodInvoker, const wchar_t* message)

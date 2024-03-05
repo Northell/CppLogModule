@@ -1,0 +1,13 @@
+C:/share/Code/Core/CppModules/CppLogModule/build-LogModule-Desktop_Qt_5_15_2_MinGW_32_bit-Debug/CMakeFiles/edit_cache.dir
+C:/share/Code/Core/CppModules/CppLogModule/build-LogModule-Desktop_Qt_5_15_2_MinGW_32_bit-Debug/CMakeFiles/rebuild_cache.dir
+C:/share/Code/Core/CppModules/CppLogModule/build-LogModule-Desktop_Qt_5_15_2_MinGW_32_bit-Debug/CMakeFiles/list_install_components.dir
+C:/share/Code/Core/CppModules/CppLogModule/build-LogModule-Desktop_Qt_5_15_2_MinGW_32_bit-Debug/CMakeFiles/install.dir
+C:/share/Code/Core/CppModules/CppLogModule/build-LogModule-Desktop_Qt_5_15_2_MinGW_32_bit-Debug/CMakeFiles/install/local.dir
+C:/share/Code/Core/CppModules/CppLogModule/build-LogModule-Desktop_Qt_5_15_2_MinGW_32_bit-Debug/CMakeFiles/install/strip.dir
+C:/share/Code/Core/CppModules/CppLogModule/build-LogModule-Desktop_Qt_5_15_2_MinGW_32_bit-Debug/LogModule/CMakeFiles/CppLogModule.dir
+C:/share/Code/Core/CppModules/CppLogModule/build-LogModule-Desktop_Qt_5_15_2_MinGW_32_bit-Debug/LogModule/CMakeFiles/edit_cache.dir
+C:/share/Code/Core/CppModules/CppLogModule/build-LogModule-Desktop_Qt_5_15_2_MinGW_32_bit-Debug/LogModule/CMakeFiles/rebuild_cache.dir
+C:/share/Code/Core/CppModules/CppLogModule/build-LogModule-Desktop_Qt_5_15_2_MinGW_32_bit-Debug/LogModule/CMakeFiles/list_install_components.dir
+C:/share/Code/Core/CppModules/CppLogModule/build-LogModule-Desktop_Qt_5_15_2_MinGW_32_bit-Debug/LogModule/CMakeFiles/install.dir
+C:/share/Code/Core/CppModules/CppLogModule/build-LogModule-Desktop_Qt_5_15_2_MinGW_32_bit-Debug/LogModule/CMakeFiles/install/local.dir
+C:/share/Code/Core/CppModules/CppLogModule/build-LogModule-Desktop_Qt_5_15_2_MinGW_32_bit-Debug/LogModule/CMakeFiles/install/strip.dir
