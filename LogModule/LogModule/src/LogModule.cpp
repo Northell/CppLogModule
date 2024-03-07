@@ -23,11 +23,13 @@ LogModule::LogModule *LogModule::LogModule::get_instance()
 void LogModule::LogModule::wrapper(LogModule* pInstance)
 {
     //Пока поток не будет разрушен или пока есть очередь сообщений
-    while ((!pInstance->m_terminated)> 0)
+    while ((pInstance !=nullptr) && ((!pInstance->m_terminated)> 0))
     {
         if (pInstance->s_deqMessages.size() > 0)
         {
             std::lock_guard<std::recursive_mutex> lock(pInstance->m_logMutex);
+
+            if (pInstance->m_terminated) break;
 
             try
             {
@@ -61,6 +63,8 @@ void LogModule::LogModule::write(const std::string& logFileName, const std::stri
 #else
             mkdir(logPath.c_str());
 #endif
+            logPath += "/"+logFileName;
+
             streamFile.open(logPath, std::ios::app | std::ios::binary);
 
             const std::locale utf8_locale = std::locale(std::locale(), new std::codecvt_utf8<wchar_t>());
@@ -125,12 +129,13 @@ LogModule::LogModule::~LogModule()
 
 void LogModule::LogModule::write_log(const std::string &logFileName, const std::string &cref_objectInvoker, const std::string &cref_methodInvoker, const std::string &cref_message)
 {
-    std::lock_guard<std::recursive_mutex> lock(m_logMutex);
-
-    try
+    if (!m_terminated)
     {
-        if (!m_terminated)
+        std::lock_guard<std::recursive_mutex> lock(m_logMutex);
+
+        try
         {
+
             if (cref_message.size() > 0)
             {
                 try
@@ -147,19 +152,20 @@ void LogModule::LogModule::write_log(const std::string &logFileName, const std::
                     std::cout << "ERROR IN LOGMODULE: " <<  std::string(ex.what()) + "\n";
                 }
             }
+
         }
-    }
-    catch (const std::exception& ex)
-    {
-        std::cout << "ERROR in LOGMODULE: "  + std::string(ex.what());
+        catch (const std::exception& ex)
+        {
+            std::cout << "ERROR in LOGMODULE: "  + std::string(ex.what());
+        }
     }
 }
 
 void LogModule::LogModule::dispose()
 {
     std::lock_guard<std::recursive_mutex> lock(m_logMutex);
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+
     m_terminated = true;
 }
-
-
-

@@ -10,15 +10,20 @@ void LogModule::write_log(const std::string& cref_logFileName, const std::string
 {
     if (is_debug)
     {
-        std::lock_guard<std::mutex> lock(locker);
-
         if (!s_isTerminated)
         {
-            LogModule::get_instance()->write_log(cref_logFileName.c_str()
-                      , cref_classInvoker.c_str()
-                      , cref_methodInvoker.c_str()
-                      , cref_message.c_str()
-                      );
+            std::lock_guard<std::mutex> lock(locker);
+
+            LogModule* pInstance = LogModule::get_instance();
+
+            if (pInstance != nullptr)
+            {
+               pInstance->write_log(cref_logFileName.c_str()
+                          , cref_classInvoker.c_str()
+                          , cref_methodInvoker.c_str()
+                          , cref_message.c_str()
+                          );
+            }
         }
     }
 }
@@ -30,10 +35,14 @@ void LogModule::set_debug(bool isDebug)
 
 void LogModule::dispose_logger()
 {
-    std::lock_guard<std::mutex> lock(locker);
-
     s_isTerminated = true;
-    LogModule::get_instance()->dispose();
+
+    LogModule* pInstance = LogModule::get_instance();
+
+    if (pInstance != nullptr)
+    {
+        pInstance->dispose();
+    }
 }
 
 
