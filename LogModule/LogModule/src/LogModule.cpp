@@ -22,7 +22,7 @@ LogModule::LogModule *LogModule::LogModule::get_instance()
 
 void LogModule::LogModule::wrapper(LogModule* pInstance)
 {
-    //Пока поток не будет разрушен или пока есть очередь сообщений
+    //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     while ((pInstance !=nullptr) && ((!pInstance->m_terminated)> 0))
     {
         if (pInstance->s_deqMessages.size() > 0)
@@ -133,30 +133,33 @@ void LogModule::LogModule::write_log(const std::string &logFileName, const std::
     {
         std::lock_guard<std::recursive_mutex> lock(m_logMutex);
 
-        try
+        if (!m_terminated)
         {
-
-            if (cref_message.size() > 0)
+            try
             {
-                try
-                {
-                    std::string message = get_time() + "[" + cref_objectInvoker
-                            + ":" + cref_methodInvoker
-                            + "]:\t" + cref_message + "\n";
 
-                    s_deqMessages.push_back(std::pair<std::string, std::string>(logFileName, message));
-                }
-                catch (const std::exception& ex)
+                if (cref_message.size() > 0)
                 {
-                    //Write ERROR
-                    std::cout << "ERROR IN LOGMODULE: " <<  std::string(ex.what()) + "\n";
+                    try
+                    {
+                        std::string message = get_time() + "[" + cref_objectInvoker
+                                + ":" + cref_methodInvoker
+                                + "]:\t" + cref_message + "\n";
+
+                        s_deqMessages.push_back(std::pair<std::string, std::string>(logFileName, message));
+                    }
+                    catch (const std::exception& ex)
+                    {
+                        //Write ERROR
+                        std::cout << "ERROR IN LOGMODULE: " <<  std::string(ex.what()) + "\n";
+                    }
                 }
+
             }
-
-        }
-        catch (const std::exception& ex)
-        {
-            std::cout << "ERROR in LOGMODULE: "  + std::string(ex.what());
+            catch (const std::exception& ex)
+            {
+                std::cout << "ERROR in LOGMODULE: "  + std::string(ex.what());
+            }
         }
     }
 }
@@ -164,8 +167,10 @@ void LogModule::LogModule::write_log(const std::string &logFileName, const std::
 void LogModule::LogModule::dispose()
 {
     std::lock_guard<std::recursive_mutex> lock(m_logMutex);
-
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-
     m_terminated = true;
+}
+
+bool LogModule::LogModule::is_terminated() const noexcept
+{
+   return m_terminated;
 }

@@ -2,8 +2,8 @@
 
 namespace
 {
-    bool s_isTerminated = false;
-    std::mutex locker;
+bool s_isTerminated = false;
+std::mutex locker;
 }
 
 void LogModule::write_log(const std::string& cref_logFileName, const std::string& cref_classInvoker, const std::string& cref_methodInvoker, const std::string& cref_message)
@@ -12,17 +12,20 @@ void LogModule::write_log(const std::string& cref_logFileName, const std::string
     {
         if (!s_isTerminated)
         {
-            std::lock_guard<std::mutex> lock(locker);
-
             LogModule* pInstance = LogModule::get_instance();
 
             if (pInstance != nullptr)
             {
-               pInstance->write_log(cref_logFileName.c_str()
-                          , cref_classInvoker.c_str()
-                          , cref_methodInvoker.c_str()
-                          , cref_message.c_str()
-                          );
+                std::lock_guard<std::mutex> lock(locker);
+
+                if (!s_isTerminated)
+                {
+                    pInstance->write_log(cref_logFileName.c_str()
+                                         , cref_classInvoker.c_str()
+                                         , cref_methodInvoker.c_str()
+                                         , cref_message.c_str()
+                                         );
+                }
             }
         }
     }
