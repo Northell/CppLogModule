@@ -53,6 +53,8 @@ public:
 
     void write_log(const std::string& logFileName, const std::string& objectInvoker, const std::string& methodInvoker, const std::string& message);
     void dispose();
+
+    bool is_terminated() const noexcept;
 };
 
 }

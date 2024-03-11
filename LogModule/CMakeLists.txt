@@ -7,13 +7,12 @@ set (PROJECT CppLogModule)
 
 set(CMAKE_CXX_STANDARD 17)             # Стандарт C++
 set(CMAKE_CXX_STANDARD_REQUIRED ON) 
-set (CMAKE_SIZEOF_VOID_P 8)
 
 set(CPPLOGMODULE_ROOT /libs/CppLogModule)
 
-if (NOT UNIX)
-    set (CMAKE_MAKE_PROGRAM "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe")
-endif()
+#if (NOT UNIX)
+##    set (CMAKE_MAKE_PROGRAM "C:/Qt/5.15.2/mingw81_32/bin")
+#endif()
 
 # Enable Hot Reload for MSVC compilers if supported.
 if (POLICY CMP0141)
