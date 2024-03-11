@@ -1,8 +1,4 @@
-﻿# CMakeList.txt: проект CMake для LogModule; включите исходный код и определения,
-# укажите здесь логику для конкретного проекта.
-#
-# Добавьте источник в исполняемый файл этого проекта.
-add_library(${PROJECT} SHARED
+﻿add_library(${PROJECT} SHARED
     #add_executable (LogModule
     "src/LogModule.cpp" "include/LogModule.h"
     "LogAPI.cpp" "LogAPI.h"
