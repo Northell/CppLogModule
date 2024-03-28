@@ -1,5 +1,4 @@
-﻿add_library(${PROJECT} STATIC
-    #add_executable (LogModule
+﻿add_library(${PROJECT} ${TYPE_LIB}
     "src/LogModule.cpp" "include/LogModule.h"
     "LogAPI.cpp" "LogAPI.h"
     "LogAPI_global.h"
