@@ -1,4 +1,4 @@
-﻿add_library(${PROJECT} SHARED
+﻿add_library(${PROJECT} STATIC
     #add_executable (LogModule
     "src/LogModule.cpp" "include/LogModule.h"
     "LogAPI.cpp" "LogAPI.h"
