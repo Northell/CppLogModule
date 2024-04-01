@@ -17,7 +17,6 @@ else()
 endif()
 
 project ("CppLogModule" LANGUAGES CXX)
-#project ("LogModule_Test")
 
 # Включите подпроекты.
 add_subdirectory(LogModule)
@@ -53,22 +52,3 @@ install(FILES
 export(EXPORT CppLogModuleTargets
     FILE "${CMAKE_CURRENT_BINARY_DIR}/CppLogModuleTargets.cmake"
 )
-
-macro(copy_directory _src _dst)
-
-    if (EXISTS ${_dst})
-        file(REMOVE_RECURSE ${_dst})
-    endif ()
-
-    execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory ${_src} ${_dst}
-        RESULT_VARIABLE _res
-        OUTPUT_VARIABLE _out
-        ERROR_VARIABLE  _err
-    )
-
-if(_err)
-    message(FATAL_ERROR "ERROR ---> could not be copied: ${_err}")
-endif()
-endmacro()
-
-#copy_directory(${CMAKE_CURRENT_SOURCE_DIR}/out/install ${CPPLOGMODULE_ROOT}/install)
