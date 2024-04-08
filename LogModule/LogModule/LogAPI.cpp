@@ -20,11 +20,14 @@ void LogModule::write_log(const std::string& cref_logFileName, const std::string
 
                 if (!s_isTerminated)
                 {
-                    pInstance->write_log(cref_logFileName.c_str()
-                                         , cref_classInvoker.c_str()
-                                         , cref_methodInvoker.c_str()
-                                         , cref_message.c_str()
-                                         );
+                    if (cref_logFileName.size()>0)
+                    {
+                        pInstance->write_log(cref_logFileName.c_str()
+                                             , cref_classInvoker.c_str()
+                                             , cref_methodInvoker.c_str()
+                                             , cref_message.c_str()
+                                             );
+                    }
                 }
             }
         }
