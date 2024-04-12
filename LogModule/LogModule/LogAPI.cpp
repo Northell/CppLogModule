@@ -2,35 +2,33 @@
 
 namespace
 {
-bool s_isTerminated = false;
-std::mutex locker;
+std::atomic<bool> s_isTerminated = false;
+LogModule::LogModule s_logModule;
 }
 
 void LogModule::write_log(const std::string& cref_logFileName, const std::string& cref_classInvoker, const std::string& cref_methodInvoker, const std::string& cref_message)
 {
-    if (is_debug)
+    LogModule* pInstance = nullptr;
+
+    try
     {
-        if (!s_isTerminated)
+        if (is_debug)
         {
-            LogModule* pInstance = LogModule::get_instance();
-
-            if (pInstance != nullptr)
+            if (!s_isTerminated)
             {
-                std::lock_guard<std::mutex> lock(locker);
-
-                if (!s_isTerminated)
+                if ((cref_logFileName.size()>0)
+                        && (cref_classInvoker.size()>0)
+                        && (cref_methodInvoker.size()>0))
                 {
-                    if (cref_logFileName.size()>0)
-                    {
-                        pInstance->write_log(cref_logFileName.c_str()
-                                             , cref_classInvoker.c_str()
-                                             , cref_methodInvoker.c_str()
-                                             , cref_message.c_str()
-                                             );
-                    }
+                    s_logModule.write_log(cref_logFileName, cref_classInvoker, cref_methodInvoker, cref_message);
                 }
             }
         }
+
+    }
+    catch(const std::exception& ex)
+    {
+        //NOTHING
     }
 }
 
@@ -42,13 +40,7 @@ void LogModule::set_debug(bool isDebug)
 void LogModule::dispose_logger()
 {
     s_isTerminated = true;
-
-    LogModule* pInstance = LogModule::get_instance();
-
-    if (pInstance != nullptr)
-    {
-        pInstance->dispose();
-    }
+    s_logModule.dispose();
 }
 
 

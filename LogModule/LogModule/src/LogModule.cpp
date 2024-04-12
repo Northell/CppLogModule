@@ -1,51 +1,75 @@
 #include "../include/LogModule.h"
-
-LogModule::LogModule* LogModule::LogModule::s_pInstance = nullptr;
-
 void LogModule::LogModule::init()
 {
-    m_terminated = false;
+    _terminated = false;
+
+    _deqRawMessages = std::make_unique<std::deque<std::pair<std::string, std::string>>>();
+
+    _wrapperThread = std::thread (&LogModule::wrapper_raw, this);
 }
 
-LogModule::LogModule *LogModule::LogModule::get_instance()
+void LogModule::LogModule::wrapper_raw(LogModule* pInstance)
 {
-    if (s_pInstance==nullptr)
+    while ((pInstance !=nullptr) && ((!pInstance->_terminated)> 0))
     {
-        s_pInstance = new LogModule();
-
-        std::thread d(wrapper, s_pInstance);
-        d.detach();
-    }
-
-    return s_pInstance;
-}
-
-void LogModule::LogModule::wrapper(LogModule* pInstance)
-{
-    //���� ����� �� ����� �������� ��� ���� ���� ������� ���������
-    while ((pInstance !=nullptr) && ((!pInstance->m_terminated)> 0))
-    {
-        if (pInstance->s_deqMessages.size() > 0)
+        try
         {
-            std::lock_guard<std::recursive_mutex> lock(pInstance->m_logMutex);
-
-            if (pInstance->m_terminated) break;
-
-            try
+            if ((pInstance->_deqRawMessages->size()>0))
             {
-                while (pInstance->s_deqMessages.size()>0)
+                std::unique_ptr<std::deque<std::pair<std::string, std::string>>> deq;
+
+                std::unique_lock<std::mutex> lock(pInstance->_mutex);
+                pInstance->_isBusy = true;
+
+                std::this_thread::sleep_for(std::chrono::milliseconds(10));
+
+                try
                 {
-                    auto d = pInstance->s_deqMessages.front();
-                    pInstance->s_deqMessages.pop_front();
-                    pInstance->write(d.first, d.second);
+                    deq = std::move(pInstance->_deqRawMessages);
+                    pInstance->_deqRawMessages = std::make_unique<std::deque<std::pair<std::string, std::string>>>();
+                }
+                catch (...)
+                {
+                    //NOTHING
+                }
+
+                pInstance->_isBusy = false;
+                std::this_thread::sleep_for(std::chrono::milliseconds(10));
+
+                pInstance->_isBusy = false;
+
+                lock.unlock();
+                pInstance->_conditionVar_mutex.notify_all();
+
+                if (deq!= nullptr)
+                {
+                    while (!deq->empty())
+                    {
+                        if ((deq->front().first.size()>0)
+                            && (deq->front().second.size()>0))
+                        {
+                            pInstance->write(deq->front().first, deq->front().second);
+
+                            deq->pop_front();
+                        }
+                    }
+
+                    deq.reset();
                 }
             }
-            catch (const std::exception& ex)
+        }
+        catch (const std::exception& ex)
+        {
+            std::cout << "[Wrapper_raw]: ERROR: " + std::string(ex.what());
+
+            if (pInstance->_isBusy)
             {
-                std::cout << "[Wrapper]: ERROR: " + std::string(ex.what());
+                pInstance->_isBusy = false;
+                pInstance->_conditionVar_mutex.notify_all();
             }
         }
-        else std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 }
 
@@ -90,13 +114,14 @@ void LogModule::LogModule::write(const std::string& logFileName, const std::stri
     }
 }
 
-std::string LogModule::LogModule::get_time()
+std::string LogModule::LogModule::get_currentTime()
 {
     std::string retval = "";
 
     try
     {
         auto dtNow = std::chrono::system_clock::now();
+
         auto dtTime = std::chrono::system_clock::to_time_t(dtNow);
 
         auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(dtNow.time_since_epoch()) -
@@ -107,7 +132,11 @@ std::string LogModule::LogModule::get_time()
 
         std::string strTime = streamTime.str();
 
-        retval = "[" + strTime.substr(0, strTime.length() - 1) + "]";
+        if (strTime.size()>0)
+        {
+            retval = "[" + strTime.substr(0, strTime.length() - 1) + "]";
+        }
+        else throw std::exception();
     }
     catch (const std::exception& ex)
     {
@@ -118,6 +147,7 @@ std::string LogModule::LogModule::get_time()
 }
 
 LogModule::LogModule::LogModule()
+    : _isBusy(false)
 {
     init();
 }
@@ -125,40 +155,39 @@ LogModule::LogModule::LogModule()
 LogModule::LogModule::~LogModule()
 {
     dispose();
+
+    _wrapperThread.join();
 }
 
-void LogModule::LogModule::write_log(const std::string &logFileName, const std::string &cref_objectInvoker, const std::string &cref_methodInvoker, const std::string &cref_message)
+void LogModule::LogModule::write_log(const std::string& logFileName, const std::string &cref_objectInvoker, const std::string &cref_methodInvoker, const std::string &cref_message)
 {
-    if (!m_terminated)
+
+    if (!_terminated)
     {
-        std::lock_guard<std::recursive_mutex> lock(m_logMutex);
-
-        if (!m_terminated)
+        try
         {
-            try
+            if (cref_message.size() > 0)
             {
 
-                if (cref_message.size() > 0)
-                {
-                    try
-                    {
-                        std::string message = get_time() + "[" + cref_objectInvoker
-                                + ":" + cref_methodInvoker
-                                + "]:\t" + cref_message + "\n";
+                std::unique_lock<std::mutex> lock(_mutex);
+                _conditionVar_mutex.wait(lock, [&]{ return !_isBusy;});
 
-                        s_deqMessages.push_back(std::pair<std::string, std::string>(logFileName, message));
-                    }
-                    catch (const std::exception& ex)
-                    {
-                        //Write ERROR
-                        std::cout << "ERROR IN LOGMODULE: " <<  std::string(ex.what()) + "\n";
-                    }
-                }
+                std::string message = get_currentTime() + "[" + cref_objectInvoker
+                        + ":" + cref_methodInvoker
+                        + "]:\t" + cref_message + "\n";
 
+                _deqRawMessages->push_back(std::make_pair(logFileName, message));
+
+                lock.unlock();
             }
-            catch (const std::exception& ex)
+        }
+        catch (const std::exception& ex)
+        {
+            std::cout << "ERROR in LOGMODULE: "  + std::string(ex.what());
+
+            if (_isBusy)
             {
-                std::cout << "ERROR in LOGMODULE: "  + std::string(ex.what());
+                _isBusy = false;
             }
         }
     }
@@ -166,11 +195,5 @@ void LogModule::LogModule::write_log(const std::string &logFileName, const std::
 
 void LogModule::LogModule::dispose()
 {
-    std::lock_guard<std::recursive_mutex> lock(m_logMutex);
-    m_terminated = true;
-}
-
-bool LogModule::LogModule::is_terminated() const noexcept
-{
-   return m_terminated;
+    _terminated = true;
 }
